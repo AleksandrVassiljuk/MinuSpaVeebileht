@@ -1,31 +1,38 @@
 import { useState } from 'react';
 
-export function ProjectForm({ onAdd }: { onAdd: (title: string) => void }) {
+interface ProjectFormProps {
+  onAdd: (title: string) => void;
+}
+
+export function ProjectForm({ onAdd }: ProjectFormProps) {
   const [value, setValue] = useState('');
 
-  const handleAdd = () => {
-    const trimmed = value.trim();
+  const submit = () => {
+    const title = value.trim();
+    if (!title) return;
 
-    if (!trimmed) return;
-
-    onAdd(trimmed);
+    onAdd(title);
     setValue('');
   };
 
   return (
-    <div className="add-row">
+    <form
+      className="add-row"
+      onSubmit={(e) => {
+        e.preventDefault();
+        submit();
+      }}
+    >
       <input
+        className="project-input"
         value={value}
         placeholder="Lisa uus projekt..."
         onChange={(e) => setValue(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') handleAdd();
-        }}
       />
 
-      <button onClick={handleAdd}>
+      <button type="submit" className="add-button">
         Lisa
       </button>
-    </div>
+    </form>
   );
 }

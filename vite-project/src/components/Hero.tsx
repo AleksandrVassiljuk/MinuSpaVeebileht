@@ -1,36 +1,24 @@
 export function Hero() {
   return (
-    <section className="hero">
-      <p className="hero-label">Tarkvara arendaja portfoolio</p>
+    <section className="hero" id="home">
+      <header className="hero-header">
+        <p className="hero-label">
+          Frontend arendaja • React / TypeScript
+        </p>
 
-      <h1 className="hero-title">ALEKSANDR VASSILJUK</h1>
+        <h1 className="hero-title">ALEKSANDR VASSILJUK</h1>
 
-      <p className="hero-subtitle">
-        React • TypeScript • Frontend arendus • SPA projekt
-      </p>
+        <p className="hero-portfolio">WEB DEVELOPER</p>
+      </header>
 
-      <p className="hero-description">
-        Ehitan kaasaegseid veebirakendusi, keskendun puhtale UI-le,
-        kasutajakogemusele ja komponentpõhisele arhitektuurile.
-      </p>
+      <div className="hero-content">
+        <p className="hero-subtitle">
+          Ehitan modernseid ja kiireid SPA rakendusi
+        </p>
 
-      <div className="hero-buttons">
-        <a href="#projects" className="btn">
-          Vaata projekte
-        </a>
-
-        <a
-          href="mailto:vassiljukaleksandr@gmail.com"
-          className="btn btn-secondary"
-        >
-          Võta ühendust
-        </a>
-      </div>
-
-      <div className="hero-meta">
-        <span>📍 Eesti</span>
-        <span>💻 Junior Developer</span>
-        <span>⚛️ React / TS</span>
+        <p className="hero-extra">
+          Keskendun puhtale UI-le, komponentidele ja kasutajakogemusele
+        </p>
       </div>
     </section>
   );

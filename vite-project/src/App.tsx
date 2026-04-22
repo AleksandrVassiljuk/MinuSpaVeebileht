@@ -1,120 +1,94 @@
 import { useState } from 'react';
-import './App.css';
+import { Hero } from './components/Hero';
+import { FilterBar } from './components/FilterBar';
+import { ProjectForm } from './components/Projectform';
+import { ProjectItem } from './components/ProjectItem';
 
-type ProjectStatus = 'building' | 'done';
+type FilterMode = 'all' | 'featured' | 'building' | 'launched';
 
 type Project = {
   id: number;
   title: string;
-  liked: boolean;
-  status: ProjectStatus;
+  status: 'building' | 'launched';
+  isFeatured: boolean;
 };
-
-type Filter = 'all' | 'liked' | 'done';
 
 export default function App() {
   const [projects, setProjects] = useState<Project[]>([]);
-  const [input, setInput] = useState('');
-  const [filter, setFilter] = useState<Filter>('all');
+  const [filter, setFilter] = useState<FilterMode>('all');
 
-  const addProject = () => {
-    const trimmed = input.trim();
-    if (!trimmed) return;
+  const addProject = (title: string) => {
+    const t = title.trim();
+    if (!t) return;
 
-    setProjects([
-      ...projects,
+    setProjects((prev) => [
       {
         id: Date.now(),
-        title: trimmed,
-        liked: false,
+        title: t,
         status: 'building',
+        isFeatured: false,
       },
+      ...prev,
     ]);
-
-    setInput('');
   };
 
-  const deleteProject = (id: number) => {
-    setProjects(projects.filter((p) => p.id !== id));
-  };
-
-  const toggleLike = (id: number) => {
-    setProjects(
-      projects.map((p) =>
-        p.id === id ? { ...p, liked: !p.liked } : p
+  const toggleFav = (id: number) => {
+    setProjects((prev) =>
+      prev.map((p) =>
+        p.id === id ? { ...p, isFeatured: !p.isFeatured } : p
       )
     );
   };
 
   const toggleStatus = (id: number) => {
-    setProjects(
-      projects.map((p) =>
+    setProjects((prev) =>
+      prev.map((p) =>
         p.id === id
           ? {
               ...p,
-              status: p.status === 'building' ? 'done' : 'building',
+              status:
+                p.status === 'building' ? 'launched' : 'building',
             }
           : p
       )
     );
   };
 
+  const deleteProject = (id: number) => {
+    setProjects((prev) => prev.filter((p) => p.id !== id));
+  };
+
   const filtered = projects.filter((p) => {
-    if (filter === 'liked') return p.liked;
-    if (filter === 'done') return p.status === 'done';
+    if (filter === 'featured') return p.isFeatured;
+    if (filter === 'building') return p.status === 'building';
+    if (filter === 'launched') return p.status === 'launched';
     return true;
   });
 
   return (
-    <div className="container">
-      <h1>Aleksandr Vassiljuk</h1>
-      <p>Tarkvara arendaja portfoolio</p>
+    <div className="app-shell">
+      <Hero />
 
-      {/* ADD */}
-      <div className="add">
-        <input
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && addProject()}
-          placeholder="Lisa projekt..."
-        />
-        <button onClick={addProject}>Lisa</button>
-      </div>
+      <ProjectForm onAdd={addProject} />
 
-      {/* FILTER */}
-      <div className="filters">
-        <button onClick={() => setFilter('all')}>Kõik</button>
-        <button onClick={() => setFilter('liked')}>Lemmikud</button>
-        <button onClick={() => setFilter('done')}>Valmis</button>
-      </div>
+      <FilterBar activeFilter={filter} onChange={setFilter} />
 
-      {/* EMPTY */}
       {filtered.length === 0 ? (
-        <p>Ühtegi projekti pole veel</p>
+        <p className="empty-state">Ühtegi projekti pole</p>
       ) : (
-        filtered.map((p) => (
-          <div key={p.id} className="card">
-            <h3>{p.title}</h3>
-
-            <p>
-              {p.status === 'building' ? 'Arendamisel' : 'Valmis'}
-              {p.liked ? ' • Lemmik' : ''}
-            </p>
-
-            <div className="buttons">
-              <button onClick={() => toggleLike(p.id)}>
-                like
-              </button>
-
-              <button onClick={() => toggleStatus(p.id)}>
-                status
-              </button>
-
-              <button onClick={() => deleteProject(p.id)}>
-                delete
-              </button>
-            </div>
-          </div>
+        filtered.map((project) => (
+          <ProjectItem
+            key={project.id}
+            project={project}
+            isEditing={false}
+            editingTitle=""
+            onEditingTitleChange={() => {}}
+            onStartEditing={() => {}}
+            onSaveEdit={() => {}}
+            onToggleFavorite={toggleFav}
+            onToggleStatus={toggleStatus}
+            onDelete={deleteProject}
+          />
         ))
       )}
     </div>

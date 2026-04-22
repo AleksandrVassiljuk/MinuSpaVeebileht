@@ -1,6 +1,6 @@
 export type ProjectStatus = 'building' | 'launched';
 
-export type FilterMode = 'all' | 'featured' | ProjectStatus;
+export type FilterMode = 'all' | 'featured' | 'building' | 'launched';
 
 export interface PortfolioProject {
   id: number;

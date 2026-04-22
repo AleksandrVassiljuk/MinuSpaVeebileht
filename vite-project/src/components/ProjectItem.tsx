@@ -1,44 +1,83 @@
+import type { KeyboardEvent } from 'react';
 import type { PortfolioProject } from '../types';
 
-function getStatusText(status: PortfolioProject['status']) {
-  return status === 'building' ? 'Arendamisel' : 'Valmis';
+interface ProjectItemProps {
+  project: PortfolioProject;
+  isEditing: boolean;
+  editingTitle: string;
+  onEditingTitleChange: (value: string) => void;
+  onStartEditing: (project: PortfolioProject) => void;
+  onSaveEdit: (id: number) => void;
+  onToggleFavorite: (id: number) => void;
+  onToggleStatus: (id: number) => void;
+  onDelete: (id: number) => void;
 }
 
 export function ProjectItem({
   project,
-  onDelete,
-  onToggleLike,
+  isEditing,
+  editingTitle,
+  onEditingTitleChange,
+  onStartEditing,
+  onSaveEdit,
+  onToggleFavorite,
   onToggleStatus,
-}: {
-  project: PortfolioProject;
-  onDelete: (id: number) => void;
-  onToggleLike: (id: number) => void;
-  onToggleStatus: (id: number) => void;
-}) {
+  onDelete,
+}: ProjectItemProps) {
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      onSaveEdit(project.id);
+    }
+  };
+
+  const statusText =
+    project.status === 'building' ? 'In progress' : 'Completed';
+
   return (
-    <div className="card">
-      <div>
-        <h3>{project.title}</h3>
-
-        <p>
-          {getStatusText(project.status)}
-          {project.isFeatured ? ' • Lemmik' : ''}
-        </p>
+    <article className="project-card">
+      <div className="project-main">
+        {isEditing ? (
+          <input
+            className="project-edit-input"
+            value={editingTitle}
+            onChange={(e) => onEditingTitleChange(e.target.value)}
+            onKeyDown={handleKeyDown}
+            autoFocus
+          />
+        ) : (
+          <>
+            <h3 className="project-title">{project.title}</h3>
+            <p className="project-meta">
+              {statusText}
+              {project.isFeatured && ' • Favorite'}
+            </p>
+          </>
+        )}
       </div>
 
-      <div className="actions">
-        <button onClick={() => onToggleLike(project.id)}>
-          {project.isFeatured ? 'liked' : 'like'}
+      <div className="project-actions">
+        <button type="button" onClick={() => onToggleFavorite(project.id)}>
+          {project.isFeatured ? 'Unfavorite' : 'Favorite'}
         </button>
 
-        <button onClick={() => onToggleStatus(project.id)}>
-          switch
+        <button type="button" onClick={() => onToggleStatus(project.id)}>
+          Toggle status
         </button>
 
-        <button onClick={() => onDelete(project.id)}>
-          delete
+        {isEditing ? (
+          <button type="button" onClick={() => onSaveEdit(project.id)}>
+            Save
+          </button>
+        ) : (
+          <button type="button" onClick={() => onStartEditing(project)}>
+            Edit
+          </button>
+        )}
+
+        <button type="button" onClick={() => onDelete(project.id)}>
+          Delete
         </button>
       </div>
-    </div>
+    </article>
   );
 }
