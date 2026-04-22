@@ -1,0 +1,161 @@
+:root {
+  --text: #c7c7d1;
+  --text-h: #ffffff;
+  --muted: #9aa0aa;
+
+  --bg: #0b0f19;
+  --border: rgba(255, 255, 255, 0.08);
+
+  --card: rgba(255, 255, 255, 0.04);
+  --card-hover: rgba(255, 255, 255, 0.07);
+
+  --input: rgba(255, 255, 255, 0.06);
+  --input-focus: rgba(124, 58, 237, 0.25);
+
+  --accent: #7c3aed;
+  --accent-hover: #6d28d9;
+  --accent-bg: rgba(124, 58, 237, 0.15);
+
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+
+  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --mono: ui-monospace, Consolas, monospace;
+
+  font: 18px/145% var(--sans);
+  letter-spacing: 0.2px;
+  color: var(--text);
+  background: var(--bg);
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+}
+
+h1, h2, h3 {
+  color: var(--text-h);
+  margin: 0;
+}
+
+p {
+  color: var(--muted);
+}
+
+button {
+  border: none;
+  cursor: pointer;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--input);
+  color: var(--text);
+  transition: 0.2s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  background: var(--card-hover);
+}
+
+button.primary {
+  background: var(--accent);
+  color: white;
+}
+
+button.primary:hover {
+  background: var(--accent-hover);
+}
+
+input {
+  padding: 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--input);
+  color: var(--text);
+  outline: none;
+  transition: 0.2s;
+}
+
+input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--input-focus);
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 15px;
+  margin: 12px auto;
+  width: 340px;
+  transition: 0.2s ease;
+  box-shadow: var(--shadow);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  background: var(--card-hover);
+}
+
+.container {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.add {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 20px 0;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.filters {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 15px 0;
+}
+
+.filters button {
+  background: transparent;
+  border: 1px solid var(--border);
+}
+
+.filters button:hover {
+  border-color: var(--accent);
+  color: white;
+}
+
+.card,
+button,
+input {
+  will-change: transform;
+}
