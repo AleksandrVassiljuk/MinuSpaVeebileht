@@ -1,64 +1,174 @@
+/* IMPORT (uus font) */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
 :root {
   color-scheme: light;
 
+  /* PANELS */
   --panel: #ffffff;
-  --panel-border: rgba(15, 23, 42, 0.1);
+  --panel-soft: #f9fbff;
+  --panel-border: rgba(15, 23, 42, 0.08);
 
-  --text: #0f172a;
-  --muted: #64748b;
+  /* TEXT */
+  --text: #0b1220;
+  --muted: #6b7280;
+  --heading: #020617;
 
-  --chip: #eaf2ff;
-  --chip-active: #cfe3ff;
+  /* ACCENTS */
+  --accent: #4f46e5;
+  --accent-2: #6366f1;
+  --accent-soft: rgba(99, 102, 241, 0.15);
 
-  --accent: #2563eb;
-  --accent-2: #3b82f6;
+  /* CHIPS */
+  --chip: #eef4ff;
+  --chip-active: #dbeafe;
+
+  /* SHADOW */
+  --shadow: 0 10px 30px rgba(0,0,0,0.05);
 }
 
-/* BACKGROUND */
+/* BACKGROUND (heledam ja pehmem) */
 body {
   margin: 0;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   color: var(--text);
   background:
-    radial-gradient(circle at 20% 20%, rgba(37, 99, 235, 0.10), transparent 40%),
-    radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.10), transparent 45%),
-    linear-gradient(180deg, #f8fafc, #eef2ff);
+    radial-gradient(circle at 10% 10%, rgba(99, 102, 241, 0.08), transparent 40%),
+    radial-gradient(circle at 90% 90%, rgba(59, 130, 246, 0.08), transparent 50%),
+    linear-gradient(180deg, #ffffff, #f1f5ff);
+}
+
+/* CONTAINER */
+.app-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px;
 }
 
 /* INPUT */
 .project-input,
 .project-edit-input {
-  background: #ffffff;
+  background: var(--panel);
   border: 1px solid var(--panel-border);
   color: var(--text);
+  padding: 12px 14px;
+  border-radius: 12px;
+  transition: 0.2s ease;
+}
+
+.project-input:focus,
+.project-edit-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
 }
 
 /* ADD BUTTON */
 .add-button {
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
   color: #ffffff;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s ease;
+  box-shadow: var(--shadow);
+}
+
+.add-button:hover {
+  transform: translateY(-2px);
+  opacity: 0.95;
 }
 
 /* FILTER CHIPS */
 .filter-chip {
   background: var(--chip);
   color: var(--text);
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.filter-chip:hover {
+  background: var(--chip-active);
 }
 
 .filter-chip--active {
   background: var(--chip-active);
+  font-weight: 600;
 }
 
 /* PROJECT CARD */
 .project-card {
-  background: var(--panel);
+  background: var(--panel-soft);
   border: 1px solid var(--panel-border);
+  border-radius: 16px;
+  padding: 18px;
+  transition: 0.25s ease;
+  box-shadow: var(--shadow);
 }
 
-/* MUTED TEXT */
-.hero-label,
-.hero-subtitle,
-.empty-state,
+.project-card:hover {
+  transform: translateY(-4px);
+}
+
+/* PROJECT TITLE */
+.project-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--heading);
+}
+
+/* PROJECT META */
 .project-meta {
+  font-size: 13px;
   color: var(--muted);
+  margin-top: 6px;
+}
+
+/* HERO */
+.hero-label {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.hero-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--heading);
+}
+
+.hero-subtitle {
+  color: var(--muted);
+  margin-top: 8px;
+}
+
+/* EMPTY STATE */
+.empty-state {
+  text-align: center;
+  padding: 40px;
+  color: var(--muted);
+}
+
+/* EXTRA: DIVIDER */
+.divider {
+  height: 1px;
+  background: var(--panel-border);
+  margin: 20px 0;
+}
+
+/* EXTRA: BADGE */
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 500;
 }
